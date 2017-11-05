@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+}
+
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>后台管理中心</title>
+
+    @Styles.Render("~/MyCss/css")
+    @Scripts.Render("~/MyScript/js")
+
+</head>
+<body style="background-color:#f2f9fd;">
+    <div class="header bg-main">
+        <div class="logo margin-big-left fadein-top">
+            <h1><img src="@Url.Content("~/images/y.jpg")" class="radius-circle rotate-hover" height="50" alt="" />管理中心</h1>
+        </div>
+        <div class="head-l">
+            <a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span> 退出登录</a>
+        </div>
+    </div>
+    <div class="leftnav">
+        <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
+        <h2><span class="icon-user"></span>人员管理</h2>
+        <ul>
+            <!--<ul style="display:block">-->
+            <li><a href="@Url.Action("AddPeople","People")" target="right"><span class="icon-caret-right"></span>添加成员</a></li>
+            <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>修改密码</a></li>
+            <li><a href="page.html" target="right"><span class="icon-caret-right"></span>单页管理</a></li>
+            <li><a href="adv.html" target="right"><span class="icon-caret-right"></span>首页轮播</a></li>
+            <li><a href="book.html" target="right"><span class="icon-caret-right"></span>留言管理</a></li>
+            <li><a href="column.html" target="right"><span class="icon-caret-right"></span>栏目管理</a></li>
+        </ul>
+        <h2><span class="icon-envelope"></span>消息管理</h2>
+        <ul>
+            <li><a href="list.html" target="right"><span class="icon-caret-right"></span>内容管理</a></li>
+            <li><a href="add.html" target="right"><span class="icon-caret-right"></span>添加内容</a></li>
+            <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>分类管理</a></li>
+        </ul>
+
+        <h2><span class="icon-database"></span>项目管理</h2>
+        <ul>
+            <li><a href="@Url.Action("Show_All_Project","Project")" target="right"><span class="icon-caret-right"></span>所有项目</a></li>
+            <li><a href="add.html" target="right"><span class="icon-caret-right"></span>添加内容</a></li>
+            <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>分类管理</a></li>
+        </ul>
+
+
+        <h2><span class="icon-tasks"></span>任务管理</h2>
+        <ul>
+            <li><a href="list.html" target="right"><span class="icon-caret-right"></span>内容管理</a></li>
+            <li><a href="add.html" target="right"><span class="icon-caret-right"></span>添加内容</a></li>
+            <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>分类管理</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $(".leftnav h2").click(function () {
+                $(this).next().slideToggle(200);
+                $(this).toggleClass("on");
+            })
+            $(".leftnav ul li a").click(function () {
+                $("#a_leader_txt").text($(this).text());
+                $(".leftnav ul li a").removeClass("on");
+                $(this).addClass("on");
+            })
+        });
+    </script>
+    <ul class="bread">
+        <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
+        <li><a href="##" id="a_leader_txt">欢迎页</a></li>
+
+    </ul>
+    <div class="admin">
+        <iframe scrolling="auto" rameborder="0" src="@Url.Action("WelcomePage","Welcome")" name="right" width="100%" height="100%"></iframe>
+    </div>
+    <div style="text-align:center;">
+        <p>来源:<a href="#" target="_blank">留级生</a></p>
+    </div>
+</body>
+</html>

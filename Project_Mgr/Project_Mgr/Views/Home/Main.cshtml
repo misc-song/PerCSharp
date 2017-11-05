@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title></title>
+</head>
+@Styles.Render("~/css/css")
+@Scripts.Render("~/bundles/bootstrap")
+<frameset rows="59,*" cols="*" frameborder="no" border="0" framespacing="0">
+    <frame src="@Url.Action("Top","Home")" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
+    <frameset cols="213,*" frameborder="no" border="0" framespacing="0">
+        <frame src="@Url.Action("Left","Home")" name="leftFrame" scrolling="No" noresize="noresize" id="leftFrame" title="leftFrame" />
+        <frame src="@Url.Action("Center","Home")" name="mainFrame" id="mainFrame" title="mainFrame" />
+    </frameset>
+</frameset>
+<noframes>
+    <body>
+    </body>
+</noframes>
+</html>

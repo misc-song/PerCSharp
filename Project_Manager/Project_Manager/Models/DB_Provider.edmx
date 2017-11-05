@@ -1,0 +1,788 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Project_MgrModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Message_Id" />
+          </Key>
+          <Property Name="Message_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message_Title" Type="varchar" MaxLength="50" />
+          <Property Name="Message_Content" Type="varchar" MaxLength="500" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Message_Type_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Message_Comment">
+          <Key>
+            <PropertyRef Name="Message_Comment_Id" />
+          </Key>
+          <Property Name="Message_Comment_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="[Message_Comment_Content" Type="varchar" MaxLength="500" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Message_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Message_Type">
+          <Key>
+            <PropertyRef Name="Message_Type_Id" />
+          </Key>
+          <Property Name="Message_Type_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message_Type_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Project_Id" />
+          </Key>
+          <Property Name="Project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Project_Customer" Type="varchar" MaxLength="50" />
+          <Property Name="Project_Detail" Type="varchar" MaxLength="500" />
+          <Property Name="Project_Start_Time" Type="datetime" />
+          <Property Name="Project_End_Time" Type="datetime" />
+          <Property Name="Project_Is_Finished" Type="bit" />
+          <Property Name="User_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Task_Id" />
+          </Key>
+          <Property Name="Task_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Priority_Level" Type="int" />
+          <Property Name="Task_Is_Finished" Type="bit" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Task_List_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Task_Comment">
+          <Key>
+            <PropertyRef Name="Task_Comment_Id" />
+          </Key>
+          <Property Name="Task_Comment_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task_Comment_Content" Type="varchar" MaxLength="500" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Task_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Task_List">
+          <Key>
+            <PropertyRef Name="Task_List_Id" />
+          </Key>
+          <Property Name="Task_List_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task_List_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Task_List_Detail" Type="varchar" MaxLength="100" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Project_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Account" Type="varchar" MaxLength="50" />
+          <Property Name="User_Pwd" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Dept" Type="varchar" MaxLength="50" />
+          <Property Name="Co" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User_Project">
+          <Key>
+            <PropertyRef Name="User_Project_Id" />
+          </Key>
+          <Property Name="User_Project_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project_Id" Type="int" />
+          <Property Name="User_Id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Message__Message__239E4DCF">
+          <End Role="Message_Type" Type="Self.Message_Type" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message_Type">
+              <PropertyRef Name="Message_Type_Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Message_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message__User_Id__22AA2996">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_C__Messa__2B3F6F97">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Message_Comment" Type="Self.Message_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Message_Id" />
+            </Principal>
+            <Dependent Role="Message_Comment">
+              <PropertyRef Name="Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_C__User___2A4B4B5E">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message_Comment" Type="Self.Message_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Message_Comment">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Project__User_Id__1273C1CD">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__Task_List___1DE57479">
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task_List">
+              <PropertyRef Name="Task_List_Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Task_List_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__User_Id__1CF15040">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Comm__Task___276EDEB3">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Task_Comment" Type="Self.Task_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Task_Id" />
+            </Principal>
+            <Dependent Role="Task_Comment">
+              <PropertyRef Name="Task_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Comm__User___267ABA7A">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task_Comment" Type="Self.Task_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task_Comment">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_List__Proje__1A14E395">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_Id" />
+            </Principal>
+            <Dependent Role="Task_List">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_List__User___1920BF5C">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task_List">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Proj__Proje__15502E78">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="User_Project" Type="Self.User_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_Id" />
+            </Principal>
+            <Dependent Role="User_Project">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Proj__User___164452B1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User_Project" Type="Self.User_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="User_Project">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Project_MgrModelStoreContainer">
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message_Comment" EntityType="Self.Message_Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message_Type" EntityType="Self.Message_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task_Comment" EntityType="Self.Task_Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task_List" EntityType="Self.Task_List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Project" EntityType="Self.User_Project" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Message__Message__239E4DCF" Association="Self.FK__Message__Message__239E4DCF">
+            <End Role="Message_Type" EntitySet="Message_Type" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message__User_Id__22AA2996" Association="Self.FK__Message__User_Id__22AA2996">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_C__Messa__2B3F6F97" Association="Self.FK__Message_C__Messa__2B3F6F97">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message_Comment" EntitySet="Message_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_C__User___2A4B4B5E" Association="Self.FK__Message_C__User___2A4B4B5E">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message_Comment" EntitySet="Message_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Project__User_Id__1273C1CD" Association="Self.FK__Project__User_Id__1273C1CD">
+            <End Role="User" EntitySet="User" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__Task_List___1DE57479" Association="Self.FK__Task__Task_List___1DE57479">
+            <End Role="Task_List" EntitySet="Task_List" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__User_Id__1CF15040" Association="Self.FK__Task__User_Id__1CF15040">
+            <End Role="User" EntitySet="User" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Comm__Task___276EDEB3" Association="Self.FK__Task_Comm__Task___276EDEB3">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="Task_Comment" EntitySet="Task_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Comm__User___267ABA7A" Association="Self.FK__Task_Comm__User___267ABA7A">
+            <End Role="User" EntitySet="User" />
+            <End Role="Task_Comment" EntitySet="Task_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_List__Proje__1A14E395" Association="Self.FK__Task_List__Proje__1A14E395">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Task_List" EntitySet="Task_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_List__User___1920BF5C" Association="Self.FK__Task_List__User___1920BF5C">
+            <End Role="User" EntitySet="User" />
+            <End Role="Task_List" EntitySet="Task_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Proj__Proje__15502E78" Association="Self.FK__User_Proj__Proje__15502E78">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="User_Project" EntitySet="User_Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Proj__User___164452B1" Association="Self.FK__User_Proj__User___164452B1">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Project" EntitySet="User_Project" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Project_MgrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Message_Id" />
+          </Key>
+          <Property Name="Message_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message_Content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Message_Type_Id" Type="Int32" />
+          <NavigationProperty Name="Message_Type" Relationship="Self.FK__Message__Message__239E4DCF" FromRole="Message" ToRole="Message_Type" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Message__User_Id__22AA2996" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="Message_Comment" Relationship="Self.FK__Message_C__Messa__2B3F6F97" FromRole="Message" ToRole="Message_Comment" />
+        </EntityType>
+        <EntityType Name="Message_Comment">
+          <Key>
+            <PropertyRef Name="Message_Comment_Id" />
+          </Key>
+          <Property Name="Message_Comment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_Message_Comment_Content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Message_Id" Type="Int32" />
+          <NavigationProperty Name="Message" Relationship="Self.FK__Message_C__Messa__2B3F6F97" FromRole="Message_Comment" ToRole="Message" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Message_C__User___2A4B4B5E" FromRole="Message_Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Message_Type">
+          <Key>
+            <PropertyRef Name="Message_Type_Id" />
+          </Key>
+          <Property Name="Message_Type_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message_Type_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Message__Message__239E4DCF" FromRole="Message_Type" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Project_Id" />
+          </Key>
+          <Property Name="Project_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Detail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Start_Time" Type="DateTime" Precision="3" />
+          <Property Name="Project_End_Time" Type="DateTime" Precision="3" />
+          <Property Name="Project_Is_Finished" Type="Boolean" />
+          <Property Name="User_Id" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Project__User_Id__1273C1CD" FromRole="Project" ToRole="User" />
+          <NavigationProperty Name="Task_List" Relationship="Self.FK__Task_List__Proje__1A14E395" FromRole="Project" ToRole="Task_List" />
+          <NavigationProperty Name="User_Project" Relationship="Self.FK__User_Proj__Proje__15502E78" FromRole="Project" ToRole="User_Project" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="Task_Id" />
+          </Key>
+          <Property Name="Task_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Priority_Level" Type="Int32" />
+          <Property Name="Task_Is_Finished" Type="Boolean" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Task_List_Id" Type="Int32" />
+          <NavigationProperty Name="Task_List" Relationship="Self.FK__Task__Task_List___1DE57479" FromRole="Task" ToRole="Task_List" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Task__User_Id__1CF15040" FromRole="Task" ToRole="User" />
+          <NavigationProperty Name="Task_Comment" Relationship="Self.FK__Task_Comm__Task___276EDEB3" FromRole="Task" ToRole="Task_Comment" />
+        </EntityType>
+        <EntityType Name="Task_Comment">
+          <Key>
+            <PropertyRef Name="Task_Comment_Id" />
+          </Key>
+          <Property Name="Task_Comment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task_Comment_Content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Task_Id" Type="Int32" />
+          <NavigationProperty Name="Task" Relationship="Self.FK__Task_Comm__Task___276EDEB3" FromRole="Task_Comment" ToRole="Task" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Task_Comm__User___267ABA7A" FromRole="Task_Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Task_List">
+          <Key>
+            <PropertyRef Name="Task_List_Id" />
+          </Key>
+          <Property Name="Task_List_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task_List_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Task_List_Detail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Project_Id" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="Self.FK__Task_List__Proje__1A14E395" FromRole="Task_List" ToRole="Project" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Task__Task_List___1DE57479" FromRole="Task_List" ToRole="Task" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Task_List__User___1920BF5C" FromRole="Task_List" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Id" />
+          </Key>
+          <Property Name="User_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_Pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dept" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Co" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Message__User_Id__22AA2996" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Message_Comment" Relationship="Self.FK__Message_C__User___2A4B4B5E" FromRole="User" ToRole="Message_Comment" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK__Project__User_Id__1273C1CD" FromRole="User" ToRole="Project" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK__Task__User_Id__1CF15040" FromRole="User" ToRole="Task" />
+          <NavigationProperty Name="Task_Comment" Relationship="Self.FK__Task_Comm__User___267ABA7A" FromRole="User" ToRole="Task_Comment" />
+          <NavigationProperty Name="Task_List" Relationship="Self.FK__Task_List__User___1920BF5C" FromRole="User" ToRole="Task_List" />
+          <NavigationProperty Name="User_Project" Relationship="Self.FK__User_Proj__User___164452B1" FromRole="User" ToRole="User_Project" />
+        </EntityType>
+        <EntityType Name="User_Project">
+          <Key>
+            <PropertyRef Name="User_Project_Id" />
+          </Key>
+          <Property Name="User_Project_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_Id" Type="Int32" />
+          <Property Name="User_Id" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="Self.FK__User_Proj__Proje__15502E78" FromRole="User_Project" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User_Proj__User___164452B1" FromRole="User_Project" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Message__Message__239E4DCF">
+          <End Role="Message_Type" Type="Self.Message_Type" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message_Type">
+              <PropertyRef Name="Message_Type_Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Message_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message__User_Id__22AA2996">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_C__Messa__2B3F6F97">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Message_Comment" Type="Self.Message_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Message_Id" />
+            </Principal>
+            <Dependent Role="Message_Comment">
+              <PropertyRef Name="Message_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_C__User___2A4B4B5E">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message_Comment" Type="Self.Message_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Message_Comment">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Project__User_Id__1273C1CD">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_List__Proje__1A14E395">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_Id" />
+            </Principal>
+            <Dependent Role="Task_List">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Proj__Proje__15502E78">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="User_Project" Type="Self.User_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Project_Id" />
+            </Principal>
+            <Dependent Role="User_Project">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__Task_List___1DE57479">
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task_List">
+              <PropertyRef Name="Task_List_Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Task_List_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task__User_Id__1CF15040">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Comm__Task___276EDEB3">
+          <End Role="Task" Type="Self.Task" Multiplicity="0..1" />
+          <End Role="Task_Comment" Type="Self.Task_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="Task_Id" />
+            </Principal>
+            <Dependent Role="Task_Comment">
+              <PropertyRef Name="Task_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_Comm__User___267ABA7A">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task_Comment" Type="Self.Task_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task_Comment">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Task_List__User___1920BF5C">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task_List" Type="Self.Task_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="Task_List">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Proj__User___164452B1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User_Project" Type="Self.User_Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Id" />
+            </Principal>
+            <Dependent Role="User_Project">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Project_MgrEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="Message_Comment" EntityType="Self.Message_Comment" />
+          <EntitySet Name="Message_Type" EntityType="Self.Message_Type" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="Task_Comment" EntityType="Self.Task_Comment" />
+          <EntitySet Name="Task_List" EntityType="Self.Task_List" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="User_Project" EntityType="Self.User_Project" />
+          <AssociationSet Name="FK__Message__Message__239E4DCF" Association="Self.FK__Message__Message__239E4DCF">
+            <End Role="Message_Type" EntitySet="Message_Type" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message__User_Id__22AA2996" Association="Self.FK__Message__User_Id__22AA2996">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_C__Messa__2B3F6F97" Association="Self.FK__Message_C__Messa__2B3F6F97">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="Message_Comment" EntitySet="Message_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_C__User___2A4B4B5E" Association="Self.FK__Message_C__User___2A4B4B5E">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message_Comment" EntitySet="Message_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Project__User_Id__1273C1CD" Association="Self.FK__Project__User_Id__1273C1CD">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_List__Proje__1A14E395" Association="Self.FK__Task_List__Proje__1A14E395">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Task_List" EntitySet="Task_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Proj__Proje__15502E78" Association="Self.FK__User_Proj__Proje__15502E78">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="User_Project" EntitySet="User_Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__Task_List___1DE57479" Association="Self.FK__Task__Task_List___1DE57479">
+            <End Role="Task_List" EntitySet="Task_List" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task__User_Id__1CF15040" Association="Self.FK__Task__User_Id__1CF15040">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Comm__Task___276EDEB3" Association="Self.FK__Task_Comm__Task___276EDEB3">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="Task_Comment" EntitySet="Task_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_Comm__User___267ABA7A" Association="Self.FK__Task_Comm__User___267ABA7A">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Task_Comment" EntitySet="Task_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Task_List__User___1920BF5C" Association="Self.FK__Task_List__User___1920BF5C">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Task_List" EntitySet="Task_List" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Proj__User___164452B1" Association="Self.FK__User_Proj__User___164452B1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Project" EntitySet="User_Project" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Project_MgrModelStoreContainer" CdmEntityContainer="Project_MgrEntities">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="Project_MgrModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Message_Id" ColumnName="Message_Id" />
+                <ScalarProperty Name="Message_Title" ColumnName="Message_Title" />
+                <ScalarProperty Name="Message_Content" ColumnName="Message_Content" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Message_Type_Id" ColumnName="Message_Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message_Comment">
+            <EntityTypeMapping TypeName="Project_MgrModel.Message_Comment">
+              <MappingFragment StoreEntitySet="Message_Comment">
+                <ScalarProperty Name="Message_Comment_Id" ColumnName="Message_Comment_Id" />
+                <ScalarProperty Name="C_Message_Comment_Content" ColumnName="[Message_Comment_Content" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Message_Id" ColumnName="Message_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message_Type">
+            <EntityTypeMapping TypeName="Project_MgrModel.Message_Type">
+              <MappingFragment StoreEntitySet="Message_Type">
+                <ScalarProperty Name="Message_Type_Id" ColumnName="Message_Type_Id" />
+                <ScalarProperty Name="Message_Type_Name" ColumnName="Message_Type_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="Project_MgrModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Project_Customer" ColumnName="Project_Customer" />
+                <ScalarProperty Name="Project_Detail" ColumnName="Project_Detail" />
+                <ScalarProperty Name="Project_Start_Time" ColumnName="Project_Start_Time" />
+                <ScalarProperty Name="Project_End_Time" ColumnName="Project_End_Time" />
+                <ScalarProperty Name="Project_Is_Finished" ColumnName="Project_Is_Finished" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="Project_MgrModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+                <ScalarProperty Name="Task_Name" ColumnName="Task_Name" />
+                <ScalarProperty Name="Priority_Level" ColumnName="Priority_Level" />
+                <ScalarProperty Name="Task_Is_Finished" ColumnName="Task_Is_Finished" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Task_List_Id" ColumnName="Task_List_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task_Comment">
+            <EntityTypeMapping TypeName="Project_MgrModel.Task_Comment">
+              <MappingFragment StoreEntitySet="Task_Comment">
+                <ScalarProperty Name="Task_Comment_Id" ColumnName="Task_Comment_Id" />
+                <ScalarProperty Name="Task_Comment_Content" ColumnName="Task_Comment_Content" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Task_Id" ColumnName="Task_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task_List">
+            <EntityTypeMapping TypeName="Project_MgrModel.Task_List">
+              <MappingFragment StoreEntitySet="Task_List">
+                <ScalarProperty Name="Task_List_Id" ColumnName="Task_List_Id" />
+                <ScalarProperty Name="Task_List_Name" ColumnName="Task_List_Name" />
+                <ScalarProperty Name="Task_List_Detail" ColumnName="Task_List_Detail" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Project_MgrModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="User_Pwd" ColumnName="User_Pwd" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Dept" ColumnName="Dept" />
+                <ScalarProperty Name="Co" ColumnName="Co" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Project">
+            <EntityTypeMapping TypeName="Project_MgrModel.User_Project">
+              <MappingFragment StoreEntitySet="User_Project">
+                <ScalarProperty Name="User_Project_Id" ColumnName="User_Project_Id" />
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

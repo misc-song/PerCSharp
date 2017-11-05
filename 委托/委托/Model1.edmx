@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AID" />
+          </Key>
+          <Property Name="AID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Text" Type="varchar" MaxLength="500" />
+          <Property Name="Count" Type="int" />
+          <Property Name="BestAnswer" Type="bit" />
+          <Property Name="PostDatetime" Type="datetime" />
+          <Property Name="VoteNice" Type="int" />
+          <Property Name="VoteBad" Type="int" />
+          <Property Name="UID" Type="int" />
+          <Property Name="QID" Type="int" />
+        </EntityType>
+        <EntityType Name="QAuser">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="headimg" Type="varchar" MaxLength="100" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Passwd" Type="varchar" MaxLength="50" />
+          <Property Name="Sex" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Score" Type="int" />
+          <Property Name="RewardScore" Type="int" />
+          <Property Name="PaidScore" Type="int" />
+          <Property Name="AReCount" Type="int" />
+          <Property Name="AAcceptCount" Type="int" />
+          <Property Name="QSolvedCount" Type="int" />
+          <Property Name="QUnsolveCount" Type="int" />
+          <Property Name="QCancelledCount" Type="int" />
+          <Property Name="CreatedTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QID" />
+          </Key>
+          <Property Name="QID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Catalog" Type="varchar" MaxLength="50" />
+          <Property Name="Tag" Type="varchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="Text" Type="varchar" MaxLength="8000" />
+          <Property Name="Score" Type="int" />
+          <Property Name="PostDatetime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Mark" Type="int" />
+          <Property Name="ViewCount" Type="int" />
+          <Property Name="UID" Type="int" />
+        </EntityType>
+        <Association Name="FK__Answer__QID__164452B1">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answer__UID__15502E78">
+          <End Role="QAuser" Type="Self.QAuser" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QAuser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__UID__1273C1CD">
+          <End Role="QAuser" Type="Self.QAuser" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QAuser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_paged_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sqlTable" Type="nvarchar" Mode="In" />
+          <Parameter Name="sqlColumns" Type="nvarchar" Mode="In" />
+          <Parameter Name="sqlWhere" Type="nvarchar" Mode="In" />
+          <Parameter Name="sqlSort" Type="nvarchar" Mode="In" />
+          <Parameter Name="pageIndex" Type="int" Mode="In" />
+          <Parameter Name="pageSize" Type="int" Mode="In" />
+          <Parameter Name="rowTotal" Type="int" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="QAModelStoreContainer">
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QAuser" EntityType="Self.QAuser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Answer__QID__164452B1" Association="Self.FK__Answer__QID__164452B1">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answer__UID__15502E78" Association="Self.FK__Answer__UID__15502E78">
+            <End Role="QAuser" EntitySet="QAuser" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__UID__1273C1CD" Association="Self.FK__Question__UID__1273C1CD">
+            <End Role="QAuser" EntitySet="QAuser" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="AID" />
+          </Key>
+          <Property Name="AID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="BestAnswer" Type="Boolean" />
+          <Property Name="PostDatetime" Type="DateTime" Precision="3" />
+          <Property Name="VoteNice" Type="Int32" />
+          <Property Name="VoteBad" Type="Int32" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="QID" Type="Int32" />
+          <NavigationProperty Name="Question" Relationship="Self.FK__Answer__QID__164452B1" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="QAuser" Relationship="Self.FK__Answer__UID__15502E78" FromRole="Answer" ToRole="QAuser" />
+        </EntityType>
+        <EntityType Name="QAuser">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="headimg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Passwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="RewardScore" Type="Int32" />
+          <Property Name="PaidScore" Type="Int32" />
+          <Property Name="AReCount" Type="Int32" />
+          <Property Name="AAcceptCount" Type="Int32" />
+          <Property Name="QSolvedCount" Type="Int32" />
+          <Property Name="QUnsolveCount" Type="Int32" />
+          <Property Name="QCancelledCount" Type="Int32" />
+          <Property Name="CreatedTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK__Answer__UID__15502E78" FromRole="QAuser" ToRole="Answer" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__Question__UID__1273C1CD" FromRole="QAuser" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QID" />
+          </Key>
+          <Property Name="QID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Catalog" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tag" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="PostDatetime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Mark" Type="Int32" />
+          <Property Name="ViewCount" Type="Int32" />
+          <Property Name="UID" Type="Int32" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK__Answer__QID__164452B1" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="QAuser" Relationship="Self.FK__Question__UID__1273C1CD" FromRole="Question" ToRole="QAuser" />
+        </EntityType>
+        <Association Name="FK__Answer__QID__164452B1">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answer__UID__15502E78">
+          <End Role="QAuser" Type="Self.QAuser" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QAuser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__UID__1273C1CD">
+          <End Role="QAuser" Type="Self.QAuser" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QAuser">
+              <PropertyRef Name="UID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="QAusers" EntityType="Self.QAuser" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <AssociationSet Name="FK__Answer__QID__164452B1" Association="Self.FK__Answer__QID__164452B1">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answer__UID__15502E78" Association="Self.FK__Answer__UID__15502E78">
+            <End Role="QAuser" EntitySet="QAusers" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__UID__1273C1CD" Association="Self.FK__Question__UID__1273C1CD">
+            <End Role="QAuser" EntitySet="QAusers" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <FunctionImport Name="sp_paged_data">
+            <Parameter Name="sqlTable" Mode="In" Type="String" />
+            <Parameter Name="sqlColumns" Mode="In" Type="String" />
+            <Parameter Name="sqlWhere" Mode="In" Type="String" />
+            <Parameter Name="sqlSort" Mode="In" Type="String" />
+            <Parameter Name="pageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="rowTotal" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QAModelStoreContainer" CdmEntityContainer="QAEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="QAModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="AID" ColumnName="AID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="BestAnswer" ColumnName="BestAnswer" />
+                <ScalarProperty Name="PostDatetime" ColumnName="PostDatetime" />
+                <ScalarProperty Name="VoteNice" ColumnName="VoteNice" />
+                <ScalarProperty Name="VoteBad" ColumnName="VoteBad" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="QID" ColumnName="QID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QAusers">
+            <EntityTypeMapping TypeName="QAModel.QAuser">
+              <MappingFragment StoreEntitySet="QAuser">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="headimg" ColumnName="headimg" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Passwd" ColumnName="Passwd" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="RewardScore" ColumnName="RewardScore" />
+                <ScalarProperty Name="PaidScore" ColumnName="PaidScore" />
+                <ScalarProperty Name="AReCount" ColumnName="AReCount" />
+                <ScalarProperty Name="AAcceptCount" ColumnName="AAcceptCount" />
+                <ScalarProperty Name="QSolvedCount" ColumnName="QSolvedCount" />
+                <ScalarProperty Name="QUnsolveCount" ColumnName="QUnsolveCount" />
+                <ScalarProperty Name="QCancelledCount" ColumnName="QCancelledCount" />
+                <ScalarProperty Name="CreatedTime" ColumnName="CreatedTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="QAModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="QID" ColumnName="QID" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="PostDatetime" ColumnName="PostDatetime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_paged_data" FunctionName="QAModel.Store.sp_paged_data" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

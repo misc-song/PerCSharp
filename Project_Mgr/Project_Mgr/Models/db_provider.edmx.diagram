@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1293ec4f050640a4875fdc4a700948d7" Name="Diagram1">
+        <EntityTypeShape EntityType="Project_MgrModel.Message" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Message_Comment" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Message_Type" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Project" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.sysdiagram" Width="1.5" PointX="5.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Task" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Task_Comment" Width="1.5" PointX="9.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.Task_List" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project_MgrModel.User" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="Project_MgrModel.FK__Message__Message__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Message__User_Id__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Message_C__Messa__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Message_C__User___267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Project__User_Id__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task_List__Proje__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task__Task_List___1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task__User_Id__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task_Comm__Task___239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task_Comm__User___22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="Project_MgrModel.FK__Task_List__User___15502E78" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
